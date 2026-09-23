@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e293b; /* Dark theme background */
+            color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #334155;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            margin-top: 0;
+            color: #38bdf8;
+        }
+        p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        input[type="number"] {
+            padding: 12px;
+            font-size: 1.2em;
+            width: 80%;
+            border: 2px solid #475569;
+            border-radius: 8px;
+            background-color: #0f172a;
+            color: white;
+            text-align: center;
+            margin-bottom: 15px;
+            outline: none;
+        }
+        input[type="number"]:focus {
+            border-color: #38bdf8;
+        }
+        button {
+            padding: 10px 25px;
+            font-size: 1.1em;
+            background-color: #10b981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #059669;
+        }
+        .restart-btn {
+            background-color: #ef4444;
+            display: none;
+        }
+        .restart-btn:hover {
+            background-color: #dc2626;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            min-height: 35px;
+        }
+        .low { color: #facc15; } /* Yellow for low */
+        .high { color: #f97316; } /* Orange for high */
+        .win { color: #4ade80; } /* Green for win */
+        .error { color: #f87171; } /* Red for error */
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Number Dhoondo!</h1>
+        <p>Maine 1 se 100 ke beech ek secret number socha hai. Batao wo kya hai?</p>
+        
+        <input type="number" id="guessInput" placeholder="Number type karein (1-100)" min="1" max="100">
+        <br>
+        <button id="guessBtn" onclick="checkGuess()">Guess Check Karo</button>
+        <button id="restartBtn" class="restart-btn" onclick="resetGame()">Naya Game Khele</button>
+        
+        <div id="message"></div>
+        <div id="attempts" style="margin-top: 15px; font-size: 0.9em; color: #94a3b8;">Attempts: 0</div>
+    </div>
+
+    <script>
+        // Computer ek random number chunta hai
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attemptsCount = 0;
+
+        const guessInput = document.getElementById('guessInput');
+        const messageDisplay = document.getElementById('message');
+        const attemptsDisplay = document.getElementById('attempts');
+        const guessBtn = document.getElementById('guessBtn');
+        const restartBtn = document.getElementById('restartBtn');
+
+        // Enter button dabane par bhi kaam karega
+        guessInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                checkGuess();
+            }
+        });
+
+        function checkGuess() {
+            let userGuess = parseInt(guessInput.value);
+
+            // Validation check
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                messageDisplay.innerHTML = "<span class='error'>Bhai, 1 se 100 ke beech ka number daalo!</span>";
+                return;
+            }
+
+            attemptsCount++;
+            attemptsDisplay.innerText = `Attempts: ${attemptsCount}`;
+
+            // Game Logic
+            if (userGuess === randomNumber) {
+                messageDisplay.innerHTML = `<span class='win'>🎉 Sahi Jawab! Aapne ${attemptsCount} baar me dhoond liya!</span>`;
+                gameOver();
+            } else if (userGuess < randomNumber) {
+                messageDisplay.innerHTML = "<span class='low'>🔽 Thoda BADA number try karo!</span>";
+            } else {
+                messageDisplay.innerHTML = "<span class='high'>🔼 Thoda CHHOTA number try karo!</span>";
+            }
+            
+            // Input field ko clear karke focus wapas lana
+            guessInput.value = '';
+            guessInput.focus();
+        }
+
+        function gameOver() {
+            guessInput.disabled = true; // Input band kar do
+            guessBtn.style.display = 'none'; // Guess button chhupao
+            restartBtn.style.display = 'inline-block'; // Restart button dikhao
+        }
+
+        function resetGame() {
+            // Naya number aur reset attempts
+            randomNumber = Math.floor(Math.random() * 100) + 1;
+            attemptsCount = 0;
+            
+            // UI reset
+            guessInput.disabled = false;
+            guessInput.value = '';
+            messageDisplay.innerHTML = "";
+            attemptsDisplay.innerText = "Attempts: 0";
+            
+            // Buttons ko wapas normal set karna
+            guessBtn.style.display = 'inline-block';
+            restartBtn.style.display = 'none';
+            
+            guessInput.focus();
+        }
+    </script>
+</body>
+</html>

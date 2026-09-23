@@ -1,3 +1,17 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+*{
+
+  font-family: "Work Sans", sans-serif;
+  font-optical-sizing: auto;
+  
+
+
+}
+
+
 .start-free-btn:hover {
     background-color: #896baa;
     border-color: #e7e3ed;    
@@ -21,12 +35,44 @@
     background-color: rgb(133, 74, 246, 0.8) !important;
 }
 
+.next-navs{
+    width: 100%;
+    height: 750px;
+    background: linear-gradient(135deg, #a855f7 0%, #1aa8cf 100%);
+}
+
 .banner-image img {
-    width: 620px;
+    width: 100%;
     height: 500px;
     display: block;
 }
 
 .custom-image {
   border-radius: 20px;
+
 }
+
+.aiwebpage{
+font-size: 50px;
+}
+
+.rainbow{
+    background: linear-gradient(to right, rgb(85, 80, 230), rgb(240, 95, 130)); height: 430px;
+    
+}
+
+
+.rainbow-button {
+    width: 220px;
+    transition: background-color 0s, color 0s;
+    height: 70px;
+}
+
+
+
+.rainbow button:hover{
+    background-color: white !important;
+    color:black !important;
+    transition-delay: 0.19s;
+}
+
